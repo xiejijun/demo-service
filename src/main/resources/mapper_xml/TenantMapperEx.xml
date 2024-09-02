@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisenable.dms.datasource.mappers.TenantMapperEx">
+
+    <resultMap extends="com.wisenable.dms.datasource.mappers.LogMapper.BaseResultMap" id="ResultMapEx" type="com.wisenable.dms.datasource.entities.TenantEx">
+        <result column="userCount" jdbcType="VARCHAR" property="userCount" />
+    </resultMap>
+
+    <select id="selectByConditionTenant" parameterType="com.wisenable.dms.datasource.entities.TenantExample" resultMap="ResultMapEx">
+        select dms_tenant.*,
+        (select count(dms_user.id) from dms_user where dms_user.Status='0' and dms_user.tenant_id=dms_tenant.tenant_id) userCount
+        FROM dms_tenant
+        where 1=1
+        <if test="loginName != null">
+            <bind name="bindLoginName" value="'%'+loginName+'%'"/>
+            and login_name like #{bindLoginName}
+        </if>
+        <if test="type != null and type != ''">
+            and type = #{type}
+        </if>
+        <if test="enabled != null and enabled != ''">
+            and enabled = #{enabled}
+        </if>
+        <if test="remark != null">
+            <bind name="bindRemark" value="'%'+remark+'%'"/>
+            and remark like #{bindRemark}
+        </if>
+        order by id desc
+        <if test="offset != null and rows != null">
+            limit #{offset},#{rows}
+        </if>
+    </select>
+    <select id="countsByTenant" resultType="java.lang.Long">
+        SELECT
+        COUNT(id)
+        FROM dms_tenant
+        WHERE 1=1
+        <if test="loginName != null">
+            <bind name="bindLoginName" value="'%'+loginName+'%'"/>
+            and login_name like #{bindLoginName}
+        </if>
+        <if test="type != null and type != ''">
+            and type = #{type}
+        </if>
+        <if test="enabled != null and enabled != ''">
+            and enabled = #{enabled}
+        </if>
+        <if test="remark != null">
+            <bind name="bindRemark" value="'%'+remark+'%'"/>
+            and remark like #{bindRemark}
+        </if>
+    </select>
+</mapper>

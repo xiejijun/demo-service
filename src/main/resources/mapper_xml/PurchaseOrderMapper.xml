@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisenable.dms.datasource.mappers.PurchaseOrderMapper">
+  <resultMap id="BaseResultMap" type="com.wisenable.dms.datasource.entities.PurchaseOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="sales_order_no" jdbcType="VARCHAR" property="salesOrderNo" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="sales_name" jdbcType="VARCHAR" property="salesName" />
+    <result column="sales_order_time" jdbcType="TIMESTAMP" property="salesOrderTime" />
+    <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+    <result column="audit_user" jdbcType="BIGINT" property="auditUser" />
+    <result column="shipper_id" jdbcType="BIGINT" property="shipperId" />
+    <result column="third_no" jdbcType="VARCHAR" property="thirdNo" />
+    <result column="tracking_no" jdbcType="VARCHAR" property="trackingNo" />
+    <result column="work_type" jdbcType="INTEGER" property="workType" />
+    <result column="total_sale_price" jdbcType="DECIMAL" property="totalSalePrice" />
+    <result column="total_amount" jdbcType="DECIMAL" property="totalAmount" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="bank_info" jdbcType="VARCHAR" property="bankInfo" />
+    <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wisenable.dms.datasource.entities.PurchaseOrder">
+    <result column="attachments" jdbcType="LONGVARCHAR" property="attachments" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_no, sales_order_no, order_time, sales_name, sales_order_time, order_status, 
+    audit_user, shipper_id, third_no, tracking_no, work_type, total_sale_price, total_amount, 
+    discount, remark, bank_info, tenant_id, create_time, update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    attachments
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.wisenable.dms.datasource.entities.PurchaseOrderExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dms_purchase_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.wisenable.dms.datasource.entities.PurchaseOrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dms_purchase_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dms_purchase_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from dms_purchase_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wisenable.dms.datasource.entities.PurchaseOrderExample">
+    delete from dms_purchase_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wisenable.dms.datasource.entities.PurchaseOrder">
+    insert into dms_purchase_order (id, order_no, sales_order_no, 
+      order_time, sales_name, sales_order_time, 
+      order_status, audit_user, shipper_id, 
+      third_no, tracking_no, work_type, 
+      total_sale_price, total_amount, discount, 
+      remark, bank_info, tenant_id, 
+      create_time, update_time, attachments
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{salesOrderNo,jdbcType=VARCHAR}, 
+      #{orderTime,jdbcType=TIMESTAMP}, #{salesName,jdbcType=VARCHAR}, #{salesOrderTime,jdbcType=TIMESTAMP}, 
+      #{orderStatus,jdbcType=INTEGER}, #{auditUser,jdbcType=BIGINT}, #{shipperId,jdbcType=BIGINT}, 
+      #{thirdNo,jdbcType=VARCHAR}, #{trackingNo,jdbcType=VARCHAR}, #{workType,jdbcType=INTEGER}, 
+      #{totalSalePrice,jdbcType=DECIMAL}, #{totalAmount,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR}, #{bankInfo,jdbcType=VARCHAR}, #{tenantId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{attachments,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisenable.dms.datasource.entities.PurchaseOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into dms_purchase_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="salesOrderNo != null">
+        sales_order_no,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+      <if test="salesName != null">
+        sales_name,
+      </if>
+      <if test="salesOrderTime != null">
+        sales_order_time,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="auditUser != null">
+        audit_user,
+      </if>
+      <if test="shipperId != null">
+        shipper_id,
+      </if>
+      <if test="thirdNo != null">
+        third_no,
+      </if>
+      <if test="trackingNo != null">
+        tracking_no,
+      </if>
+      <if test="workType != null">
+        work_type,
+      </if>
+      <if test="totalSalePrice != null">
+        total_sale_price,
+      </if>
+      <if test="totalAmount != null">
+        total_amount,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="bankInfo != null">
+        bank_info,
+      </if>
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="attachments != null">
+        attachments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderNo != null">
+        #{salesOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesName != null">
+        #{salesName,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderTime != null">
+        #{salesOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditUser != null">
+        #{auditUser,jdbcType=BIGINT},
+      </if>
+      <if test="shipperId != null">
+        #{shipperId,jdbcType=BIGINT},
+      </if>
+      <if test="thirdNo != null">
+        #{thirdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trackingNo != null">
+        #{trackingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workType != null">
+        #{workType,jdbcType=INTEGER},
+      </if>
+      <if test="totalSalePrice != null">
+        #{totalSalePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="bankInfo != null">
+        #{bankInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attachments != null">
+        #{attachments,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wisenable.dms.datasource.entities.PurchaseOrderExample" resultType="java.lang.Long">
+    select count(*) from dms_purchase_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dms_purchase_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderNo != null">
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesOrderNo != null">
+        sales_order_no = #{record.salesOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderTime != null">
+        order_time = #{record.orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesName != null">
+        sales_name = #{record.salesName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesOrderTime != null">
+        sales_order_time = #{record.salesOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderStatus != null">
+        order_status = #{record.orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.auditUser != null">
+        audit_user = #{record.auditUser,jdbcType=BIGINT},
+      </if>
+      <if test="record.shipperId != null">
+        shipper_id = #{record.shipperId,jdbcType=BIGINT},
+      </if>
+      <if test="record.thirdNo != null">
+        third_no = #{record.thirdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trackingNo != null">
+        tracking_no = #{record.trackingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workType != null">
+        work_type = #{record.workType,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalSalePrice != null">
+        total_sale_price = #{record.totalSalePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalAmount != null">
+        total_amount = #{record.totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discount != null">
+        discount = #{record.discount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankInfo != null">
+        bank_info = #{record.bankInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tenantId != null">
+        tenant_id = #{record.tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.attachments != null">
+        attachments = #{record.attachments,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update dms_purchase_order
+    set id = #{record.id,jdbcType=BIGINT},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      sales_order_no = #{record.salesOrderNo,jdbcType=VARCHAR},
+      order_time = #{record.orderTime,jdbcType=TIMESTAMP},
+      sales_name = #{record.salesName,jdbcType=VARCHAR},
+      sales_order_time = #{record.salesOrderTime,jdbcType=TIMESTAMP},
+      order_status = #{record.orderStatus,jdbcType=INTEGER},
+      audit_user = #{record.auditUser,jdbcType=BIGINT},
+      shipper_id = #{record.shipperId,jdbcType=BIGINT},
+      third_no = #{record.thirdNo,jdbcType=VARCHAR},
+      tracking_no = #{record.trackingNo,jdbcType=VARCHAR},
+      work_type = #{record.workType,jdbcType=INTEGER},
+      total_sale_price = #{record.totalSalePrice,jdbcType=DECIMAL},
+      total_amount = #{record.totalAmount,jdbcType=DECIMAL},
+      discount = #{record.discount,jdbcType=DECIMAL},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      bank_info = #{record.bankInfo,jdbcType=VARCHAR},
+      tenant_id = #{record.tenantId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      attachments = #{record.attachments,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dms_purchase_order
+    set id = #{record.id,jdbcType=BIGINT},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      sales_order_no = #{record.salesOrderNo,jdbcType=VARCHAR},
+      order_time = #{record.orderTime,jdbcType=TIMESTAMP},
+      sales_name = #{record.salesName,jdbcType=VARCHAR},
+      sales_order_time = #{record.salesOrderTime,jdbcType=TIMESTAMP},
+      order_status = #{record.orderStatus,jdbcType=INTEGER},
+      audit_user = #{record.auditUser,jdbcType=BIGINT},
+      shipper_id = #{record.shipperId,jdbcType=BIGINT},
+      third_no = #{record.thirdNo,jdbcType=VARCHAR},
+      tracking_no = #{record.trackingNo,jdbcType=VARCHAR},
+      work_type = #{record.workType,jdbcType=INTEGER},
+      total_sale_price = #{record.totalSalePrice,jdbcType=DECIMAL},
+      total_amount = #{record.totalAmount,jdbcType=DECIMAL},
+      discount = #{record.discount,jdbcType=DECIMAL},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      bank_info = #{record.bankInfo,jdbcType=VARCHAR},
+      tenant_id = #{record.tenantId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisenable.dms.datasource.entities.PurchaseOrder">
+    update dms_purchase_order
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderNo != null">
+        sales_order_no = #{salesOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesName != null">
+        sales_name = #{salesName,jdbcType=VARCHAR},
+      </if>
+      <if test="salesOrderTime != null">
+        sales_order_time = #{salesOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditUser != null">
+        audit_user = #{auditUser,jdbcType=BIGINT},
+      </if>
+      <if test="shipperId != null">
+        shipper_id = #{shipperId,jdbcType=BIGINT},
+      </if>
+      <if test="thirdNo != null">
+        third_no = #{thirdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trackingNo != null">
+        tracking_no = #{trackingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workType != null">
+        work_type = #{workType,jdbcType=INTEGER},
+      </if>
+      <if test="totalSalePrice != null">
+        total_sale_price = #{totalSalePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null">
+        total_amount = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="bankInfo != null">
+        bank_info = #{bankInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attachments != null">
+        attachments = #{attachments,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisenable.dms.datasource.entities.PurchaseOrder">
+    update dms_purchase_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      sales_order_no = #{salesOrderNo,jdbcType=VARCHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      sales_name = #{salesName,jdbcType=VARCHAR},
+      sales_order_time = #{salesOrderTime,jdbcType=TIMESTAMP},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      audit_user = #{auditUser,jdbcType=BIGINT},
+      shipper_id = #{shipperId,jdbcType=BIGINT},
+      third_no = #{thirdNo,jdbcType=VARCHAR},
+      tracking_no = #{trackingNo,jdbcType=VARCHAR},
+      work_type = #{workType,jdbcType=INTEGER},
+      total_sale_price = #{totalSalePrice,jdbcType=DECIMAL},
+      total_amount = #{totalAmount,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      bank_info = #{bankInfo,jdbcType=VARCHAR},
+      tenant_id = #{tenantId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      attachments = #{attachments,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisenable.dms.datasource.entities.PurchaseOrder">
+    update dms_purchase_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      sales_order_no = #{salesOrderNo,jdbcType=VARCHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      sales_name = #{salesName,jdbcType=VARCHAR},
+      sales_order_time = #{salesOrderTime,jdbcType=TIMESTAMP},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      audit_user = #{auditUser,jdbcType=BIGINT},
+      shipper_id = #{shipperId,jdbcType=BIGINT},
+      third_no = #{thirdNo,jdbcType=VARCHAR},
+      tracking_no = #{trackingNo,jdbcType=VARCHAR},
+      work_type = #{workType,jdbcType=INTEGER},
+      total_sale_price = #{totalSalePrice,jdbcType=DECIMAL},
+      total_amount = #{totalAmount,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      bank_info = #{bankInfo,jdbcType=VARCHAR},
+      tenant_id = #{tenantId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <sql id="whereGetPurchaseList">
+    <where>
+      <if test="req.orderNo != null and req.orderNo != ''">
+        <bind name="bindOrderNo" value="'%'+req.orderNo+'%'" />
+        AND t1.order_no like #{bindOrderNo}
+      </if>
+      <if test="req.orderStatus != null">
+        AND t1.order_status like #{req.orderStatus}
+      </if>
+      <if test="req.shipperId != null">
+        AND t1.shipper_id like #{req.shipperId}
+      </if>
+      <if test="req.id != null">
+        AND t1.id = #{req.id}
+      </if>
+      <if test="req.auditId != null">
+        AND t1.audit_user = #{req.auditId}
+      </if>
+      <if test="req.productName != null and req.productName != ''">
+        <bind name="bindProductName" value="'%'+req.productName+'%'" />
+        AND (
+            t2.product_info like #{bindProductName}
+        )
+      </if>
+      <if test="req.remark">
+        <bind name="bindRemark" value="'%'+req.remark+'%'" />
+        AND (
+        t1.remark like #{bindRemark}
+        )
+      </if>
+      <if test="req.startTime != null and req.startTime > 0">
+        and t1.order_time &gt;=  FROM_UNIXTIME(#{req.startTime}/1000)
+      </if>
+      <if test="req.endTime != null and req.endTime > 0">
+        and t1.order_time &lt;= FROM_UNIXTIME(#{req.endTime}/1000)
+      </if>
+    </where>
+  </sql>
+
+  <select id="getPurchaseList" resultType="com.wisenable.dms.datasource.vo.PurchaseDTO">
+    select t1.id, t1.order_no AS orderNo, t1.order_time AS orderTime, t1.shipper_id AS shipperId, t1.order_status AS orderStatus,
+           t1.tracking_no AS trackingNo, t1.work_type AS workType, t1.remark AS remark, t1.tenant_id AS tenantId,
+           t1.create_time AS createTime, t1.update_time AS updateTime, t1.third_no AS thirdNo, t1.audit_user AS auditId,
+           t2.category, t2.brand_name AS brandName,t2.product_info, t2.sale_price AS price, t2.total_price AS totalPrice, t2.remark AS productRemark,
+           t2.product_name AS productName, t2.product_count AS productCount, t2.sph, t2.cyl, t2.degree
+    from dms_purchase_order t1
+    left join dms_purchase_order_detail t2 on t1.id = t2.order_id
+    <include refid="whereGetPurchaseList" />
+    order by t1.id desc
+    limit #{offset}, #{rows}
+  </select>
+
+  <select id="countPurchaseList" resultType="java.lang.Integer">
+    select count(*)
+    from dms_purchase_order t1
+    left join dms_purchase_order_detail t2 on t1.id = t2.order_id
+    <include refid="whereGetPurchaseList" />
+  </select>
+
+  <select id="sumPurchase" resultType="java.util.Map">
+    select sum(t2.product_count) as productCount, sum(t2.total_price) as totalAmount
+    from dms_purchase_order t1
+    left join dms_purchase_order_detail t2 on t1.id = t2.order_id
+    <include refid="whereGetPurchaseList" />
+  </select>
+</mapper>

@@ -1,0 +1,15 @@
+*.class
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+*.iml
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.log
+hs_err_pid*
+.idea
+/target
+**/*.iml
+
