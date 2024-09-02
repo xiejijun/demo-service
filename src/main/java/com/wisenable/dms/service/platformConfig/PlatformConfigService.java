@@ -23,7 +23,7 @@ import java.util.List;
 
 @Service
 public class PlatformConfigService {
-    private Logger logger = LoggerFactory.getLogger(PlatformConfigService.class);
+    private final Logger logger = LoggerFactory.getLogger(PlatformConfigService.class);
 
     @Resource
     private UserService userService;
@@ -34,124 +34,124 @@ public class PlatformConfigService {
     @Resource
     private PlatformConfigMapperEx platformConfigMapperEx;
 
-    public PlatformConfig getPlatformConfig(long id)throws Exception {
-        PlatformConfig result=null;
-        try{
-            if(BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
+    public PlatformConfig getPlatformConfig(long id) {
+        PlatformConfig result = null;
+        try {
+            if (BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
                 result = platformConfigMapper.selectByPrimaryKey(id);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.readFail(logger, e);
         }
         return result;
     }
 
-    public List<PlatformConfig> getPlatformConfig()throws Exception {
+    public List<PlatformConfig> getPlatformConfig() throws Exception {
         PlatformConfigExample example = new PlatformConfigExample();
         example.createCriteria();
-        List<PlatformConfig> list=null;
-        try{
-            if(BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
+        List<PlatformConfig> list = null;
+        try {
+            if (BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
                 list = platformConfigMapper.selectByExample(example);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.readFail(logger, e);
         }
         return list;
     }
 
-    public List<PlatformConfig> select(String platformKey, int offset, int rows)throws Exception {
-        List<PlatformConfig> list=null;
-        try{
-            if(BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
+    public List<PlatformConfig> select(String platformKey, int offset, int rows) throws Exception {
+        List<PlatformConfig> list = null;
+        try {
+            if (BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
                 list = platformConfigMapperEx.selectByConditionPlatformConfig(platformKey, offset, rows);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.readFail(logger, e);
         }
         return list;
     }
 
-    public Long countPlatformConfig(String platformKey)throws Exception {
-        Long result=null;
-        try{
-            if(BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
+    public Long countPlatformConfig(String platformKey) {
+        Long result = null;
+        try {
+            if (BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
                 result = platformConfigMapperEx.countsByPlatformConfig(platformKey);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.readFail(logger, e);
         }
         return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertPlatformConfig(JSONObject obj, HttpServletRequest request) throws Exception{
+    public int insertPlatformConfig(JSONObject obj, HttpServletRequest request) {
         PlatformConfig platformConfig = JSONObject.parseObject(obj.toJSONString(), PlatformConfig.class);
-        int result=0;
-        try{
-            if(BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
+        int result = 0;
+        try {
+            if (BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
                 result = platformConfigMapper.insertSelective(platformConfig);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.writeFail(logger, e);
         }
         return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updatePlatformConfig(JSONObject obj, HttpServletRequest request) throws Exception{
+    public int updatePlatformConfig(JSONObject obj, HttpServletRequest request) throws Exception {
         PlatformConfig platformConfig = JSONObject.parseObject(obj.toJSONString(), PlatformConfig.class);
-        int result=0;
-        try{
-            if(BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
+        int result = 0;
+        try {
+            if (BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
                 result = platformConfigMapper.updateByPrimaryKeySelective(platformConfig);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.writeFail(logger, e);
         }
         return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deletePlatformConfig(Long id, HttpServletRequest request)throws Exception {
-        int result=0;
-        try{
-            if(BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
+    public int deletePlatformConfig(Long id, HttpServletRequest request) {
+        int result = 0;
+        try {
+            if (BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
                 result = platformConfigMapper.deleteByPrimaryKey(id);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.writeFail(logger, e);
         }
         return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeletePlatformConfig(String ids, HttpServletRequest request)throws Exception {
+    public int batchDeletePlatformConfig(String ids, HttpServletRequest request) {
         List<Long> idList = StringUtil.strToLongList(ids);
         PlatformConfigExample example = new PlatformConfigExample();
         example.createCriteria().andIdIn(idList);
-        int result=0;
-        try{
-            if(BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
+        int result = 0;
+        try {
+            if (BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
                 result = platformConfigMapper.deleteByExample(example);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.writeFail(logger, e);
         }
         return result;
     }
 
-    public int updatePlatformConfigByKey(String platformKey, String platformValue)throws Exception {
-        int result=0;
-        try{
-            if(BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
+    public int updatePlatformConfigByKey(String platformKey, String platformValue) throws Exception {
+        int result = 0;
+        try {
+            if (BusinessConstants.DEFAULT_MANAGER.equals(userService.getCurrentUser().getLoginName())) {
                 PlatformConfig platformConfig = new PlatformConfig();
                 platformConfig.setPlatformValue(platformValue);
                 PlatformConfigExample example = new PlatformConfigExample();
                 example.createCriteria().andPlatformKeyEqualTo(platformKey);
                 result = platformConfigMapper.updateByExampleSelective(platformConfig, example);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.writeFail(logger, e);
         }
         return result;
@@ -159,18 +159,18 @@ public class PlatformConfigService {
 
     public PlatformConfig getInfoByKey(String platformKey) {
         PlatformConfig platformConfig = new PlatformConfig();
-        try{
-            if(platformKey.contains("aliOss") || platformKey.contains("weixin")) {
+        try {
+            if (platformKey.contains("aliOss") || platformKey.contains("weixin")) {
                 platformConfig = null;
             } else {
                 PlatformConfigExample example = new PlatformConfigExample();
                 example.createCriteria().andPlatformKeyEqualTo(platformKey);
-                List<PlatformConfig> list=platformConfigMapper.selectByExample(example);
-                if(list!=null && list.size()>0){
+                List<PlatformConfig> list = platformConfigMapper.selectByExample(example);
+                if (list != null && list.size() > 0) {
                     platformConfig = list.get(0);
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.readFail(logger, e);
         }
         return platformConfig;
@@ -178,20 +178,20 @@ public class PlatformConfigService {
 
     /**
      * 根据key查询平台信息-内部专用方法
+     *
      * @param platformKey
      * @return
-     * @throws Exception
      */
-    public PlatformConfig getPlatformConfigByKey(String platformKey)throws Exception {
+    public PlatformConfig getPlatformConfigByKey(String platformKey) {
         PlatformConfig platformConfig = new PlatformConfig();
-        try{
+        try {
             PlatformConfigExample example = new PlatformConfigExample();
             example.createCriteria().andPlatformKeyEqualTo(platformKey);
-            List<PlatformConfig> list=platformConfigMapper.selectByExample(example);
-            if(list!=null && list.size()>0){
+            List<PlatformConfig> list = platformConfigMapper.selectByExample(example);
+            if (list != null && list.size() > 0) {
                 platformConfig = list.get(0);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             DMSException.readFail(logger, e);
         }
         return platformConfig;
